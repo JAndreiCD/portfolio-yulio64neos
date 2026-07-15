@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio-yulio64neos.pages.dev/sitemap-index.xml

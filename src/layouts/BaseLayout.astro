@@ -6,22 +6,49 @@ import "../styles/global.css";
 interface Props {
   title: string;
   description: string;
+  image?: string;
+  type?: "website" | "article";
 }
 
-const { title, description } = Astro.props;
+const {
+  title,
+  description,
+  image = "/og-image.svg",
+  type = "website",
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = new URL(image, Astro.site);
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
 
     <meta name="description" content={description} />
     <meta name="author" content="Julio Andrei" />
     <meta name="theme-color" content="#090b0d" />
 
-    <title>{title}</title>
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:site_name" content="Julio Andrei Portfolio" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
   </head>
 
   <body>
@@ -34,6 +61,7 @@ const { title, description } = Astro.props;
 
       <Footer />
     </div>
+
     <script>
       function updateMexicoCityClock() {
         const timeElements = document.querySelectorAll(
