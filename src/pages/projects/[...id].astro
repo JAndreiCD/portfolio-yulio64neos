@@ -1,0 +1,66 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+
+  return projects.map((project) => ({
+    params: {
+      id: project.id,
+    },
+    props: {
+      project,
+    },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout
+  title={`${project.data.title} — Julio Andrei`}
+  description={project.data.description}
+>
+  <article class="mx-auto w-full max-w-4xl px-5 py-20 sm:px-8 lg:py-28">
+    <a
+      href="/projects"
+      class="mb-10 inline-flex text-sm font-semibold text-zinc-400 transition hover:text-brand-300"
+    >
+      ← Back to projects
+    </a>
+
+    <header>
+      <p
+        class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-400"
+      >
+        Case study
+      </p>
+
+      <h1
+        class="mt-5 text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-6xl"
+      >
+        {project.data.title}
+      </h1>
+
+      <p class="mt-6 text-lg leading-8 text-zinc-400">
+        {project.data.description}
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-2">
+        {
+          project.data.technologies.map((technology) => (
+            <span class="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1 text-xs font-medium text-zinc-400">
+              {technology}
+            </span>
+          ))
+        }
+      </div>
+    </header>
+
+    <div class="project-content mt-14">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
