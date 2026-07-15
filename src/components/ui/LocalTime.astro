@@ -1,0 +1,45 @@
+<div
+  class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm text-zinc-300"
+  aria-label="Current time in Mexico City"
+>
+  <span
+    class="h-2 w-2 rounded-full bg-brand-400 shadow-[0_0_12px_rgba(60,227,156,0.8)]"
+    aria-hidden="true"></span>
+
+  <span class="text-zinc-500">Mexico City</span>
+
+  <time
+    id="mexico-city-time"
+    class="min-w-[5.5rem] font-mono font-medium tabular-nums text-zinc-100"
+    datetime=""
+  >
+    --:--:--
+  </time>
+</div>
+
+<script>
+  const timeElement =
+    document.querySelector<HTMLTimeElement>("#mexico-city-time");
+
+  const visibleTimeFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Mexico_City",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+
+  function updateMexicoCityTime(): void {
+    if (!timeElement) {
+      return;
+    }
+
+    const now = new Date();
+
+    timeElement.textContent = visibleTimeFormatter.format(now);
+    timeElement.dateTime = now.toISOString();
+  }
+
+  updateMexicoCityTime();
+  window.setInterval(updateMexicoCityTime, 1000);
+</script>
