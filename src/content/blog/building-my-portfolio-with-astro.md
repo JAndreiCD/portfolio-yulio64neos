@@ -14,4 +14,18 @@ I started this portfolio with a clear goal: create a professional space where I 
 
 Instead of using a generic template, I decided to build the site step by step with Astro, Tailwind CSS, and a content-first structure.
 
-This blog will be a place to write about web development, backend systems, mobile development, Linux, C, and the process of becoming a stronger software developer.
+## Why Astro?
+
+Astro is a great fit for this project because the portfolio is mostly content: pages, articles, project case studies, and contact information.
+
+The goal is to keep the website fast, simple, and easy to maintain.
+
+## What I want this site to become
+
+This portfolio is not just a place to show a few cards and links.
+
+I want it to become a living record of my work, my technical growth, and the way I solve problems through software.
+
+## What comes next
+
+The next step is to keep improving the structure, add real case studies, write technical articles, and connect the project with GitHub and a free deployment platform.
