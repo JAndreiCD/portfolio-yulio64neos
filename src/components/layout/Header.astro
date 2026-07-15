@@ -10,9 +10,15 @@ const navigation = [
 ];
 
 const currentPath = Astro.url.pathname;
+
+function isActivePath(href: string) {
+  return href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+}
 ---
 
-<header class="border-b border-white/8">
+<header
+  class="sticky top-0 z-50 border-b border-white/8 bg-[#090b0d]/85 backdrop-blur-xl"
+>
   <div
     class="mx-auto flex min-h-20 w-full max-w-7xl items-center justify-between gap-6 px-5 sm:px-8 lg:px-10"
   >
@@ -29,10 +35,7 @@ const currentPath = Astro.url.pathname;
     <nav class="hidden items-center gap-6 lg:flex" aria-label="Main navigation">
       {
         navigation.map((item) => {
-          const isActive =
-            item.href === "/"
-              ? currentPath === "/"
-              : currentPath.startsWith(item.href);
+          const isActive = isActivePath(item.href);
 
           return (
             <a
@@ -54,11 +57,84 @@ const currentPath = Astro.url.pathname;
       <LocalTime />
     </div>
 
-    <a
-      href="/contact"
-      class="rounded-full bg-brand-400 px-4 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-300 focus:ring-offset-2 focus:ring-offset-zinc-950"
-    >
-      Start a project
-    </a>
+    <div class="hidden lg:block">
+      <a
+        href="/contact"
+        class="rounded-full bg-brand-400 px-4 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-300 focus:ring-offset-2 focus:ring-offset-zinc-950"
+      >
+        Start a project
+      </a>
+    </div>
+
+    <details class="mobile-nav relative lg:hidden">
+      <summary
+        class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white transition hover:border-brand-400/40 hover:bg-brand-400/10"
+        aria-label="Toggle navigation menu"
+      >
+        <svg
+          class="icon-menu h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M4 7h16M4 12h16M4 17h16"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"></path>
+        </svg>
+
+        <svg
+          class="icon-close h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M6 6l12 12M18 6L6 18"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"></path>
+        </svg>
+      </summary>
+
+      <div
+        class="absolute right-0 top-14 w-[min(22rem,calc(100vw-2.5rem))] rounded-3xl border border-white/10 bg-[#090b0d] p-5 shadow-2xl shadow-black/50"
+      >
+        <div class="mb-5">
+          <LocalTime />
+        </div>
+
+        <nav class="grid gap-2" aria-label="Mobile navigation">
+          {
+            navigation.map((item) => {
+              const isActive = isActivePath(item.href);
+
+              return (
+                <a
+                  href={item.href}
+                  class:list={[
+                    "rounded-2xl px-4 py-3 text-sm font-medium transition",
+                    isActive
+                      ? "bg-brand-400/10 text-brand-300"
+                      : "text-zinc-400 hover:bg-white/[0.04] hover:text-white",
+                  ]}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              );
+            })
+          }
+        </nav>
+
+        <a
+          href="/contact"
+          class="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-brand-400 px-6 font-semibold text-zinc-950 transition hover:bg-brand-300"
+        >
+          Start a project
+        </a>
+      </div>
+    </details>
   </div>
 </header>

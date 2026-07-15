@@ -9,37 +9,10 @@
   <span class="text-zinc-500">Mexico City</span>
 
   <time
-    id="mexico-city-time"
+    data-mexico-city-time
     class="min-w-[5.5rem] font-mono font-medium tabular-nums text-zinc-100"
     datetime=""
   >
-    --:--:--
+    Loading...
   </time>
 </div>
-
-<script>
-  const timeElement =
-    document.querySelector<HTMLTimeElement>("#mexico-city-time");
-
-  const visibleTimeFormatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/Mexico_City",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  });
-
-  function updateMexicoCityTime(): void {
-    if (!timeElement) {
-      return;
-    }
-
-    const now = new Date();
-
-    timeElement.textContent = visibleTimeFormatter.format(now);
-    timeElement.dateTime = now.toISOString();
-  }
-
-  updateMexicoCityTime();
-  window.setInterval(updateMexicoCityTime, 1000);
-</script>

@@ -34,5 +34,34 @@ const { title, description } = Astro.props;
 
       <Footer />
     </div>
+    <script>
+      function updateMexicoCityClock() {
+        const timeElements = document.querySelectorAll(
+          "[data-mexico-city-time]",
+        );
+
+        if (!timeElements.length) {
+          return;
+        }
+
+        const now = new Date();
+
+        const formattedTime = new Intl.DateTimeFormat("en-GB", {
+          timeZone: "America/Mexico_City",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        }).format(now);
+
+        timeElements.forEach((element) => {
+          element.textContent = formattedTime;
+          element.setAttribute("datetime", now.toISOString());
+        });
+      }
+
+      updateMexicoCityClock();
+      window.setInterval(updateMexicoCityClock, 1000);
+    </script>
   </body>
 </html>
