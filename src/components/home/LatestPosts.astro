@@ -1,8 +1,41 @@
 ---
 import { getCollection } from "astro:content";
 
-const posts = await getCollection("blog", ({ data }) => {
-  return data.draft !== true;
+interface Props {
+  lang?: "en" | "es";
+}
+
+const { lang = "en" } = Astro.props;
+
+const content = {
+  en: {
+    eyebrow: "Blog",
+    title: "Notes from the build process.",
+    description:
+      "Thoughts, lessons, and technical notes from what I am learning and building.",
+    cta: "View all posts",
+    href: "/en/blog",
+    readMore: "Read article",
+    locale: "en-US",
+    contentPrefix: "en/",
+    routePrefix: "/en/blog",
+  },
+  es: {
+    eyebrow: "Blog",
+    title: "Notas del proceso de construcción.",
+    description:
+      "Ideas, aprendizajes y notas técnicas sobre lo que estoy construyendo y aprendiendo.",
+    cta: "Ver artículos",
+    href: "/es/blog",
+    readMore: "Leer artículo",
+    locale: "es-MX",
+    contentPrefix: "es/",
+    routePrefix: "/es/blog",
+  },
+}[lang];
+
+const posts = await getCollection("blog", (post) => {
+  return post.id.startsWith(content.contentPrefix) && post.data.draft !== true;
 });
 
 const latestPosts = posts
@@ -21,62 +54,67 @@ const latestPosts = posts
         <p
           class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-400"
         >
-          Blog
+          {content.eyebrow}
         </p>
 
         <h2
           class="mt-5 max-w-2xl text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-5xl"
         >
-          Notes from the build process.
+          {content.title}
         </h2>
 
         <p class="mt-6 max-w-2xl leading-8 text-zinc-400">
-          Thoughts, lessons, and technical notes from what I am learning and
-          building.
+          {content.description}
         </p>
       </div>
 
       <a
-        href="/blog"
+        href={content.href}
         class="inline-flex min-h-12 w-fit items-center justify-center rounded-full border border-white/12 bg-white/[0.03] px-6 font-semibold text-white transition hover:border-brand-400/50 hover:bg-brand-400/10 hover:text-brand-300"
       >
-        View all posts
+        {content.cta}
       </a>
     </div>
 
     <div class="grid gap-5 lg:grid-cols-3">
       {
-        latestPosts.map((post) => (
-          <article class="group rounded-3xl border border-white/10 bg-zinc-950/40 p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-400/40 hover:bg-white/[0.04]">
-            <div class="mb-6 flex flex-wrap items-center gap-3 text-sm text-zinc-500">
-              <span class="rounded-full border border-brand-400/20 bg-brand-400/10 px-3 py-1 font-mono text-xs text-brand-300">
-                {post.data.category}
-              </span>
+        latestPosts.map((post) => {
+          const postSlug = post.id.replace(content.contentPrefix, "");
 
-              <time datetime={post.data.publishedDate.toISOString()}>
-                {post.data.publishedDate.toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
-              </time>
-            </div>
+          return (
+            <article class="group rounded-3xl border border-white/10 bg-zinc-950/40 p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-400/40 hover:bg-white/[0.04]">
+              <div class="mb-6 flex flex-wrap items-center gap-3 text-sm text-zinc-500">
+                <span class="rounded-full border border-brand-400/20 bg-brand-400/10 px-3 py-1 font-mono text-xs text-brand-300">
+                  {post.data.category}
+                </span>
 
-            <h3 class="text-xl font-semibold tracking-tight text-white">
-              {post.data.title}
-            </h3>
+                <time datetime={post.data.publishedDate.toISOString()}>
+                  {post.data.publishedDate.toLocaleDateString(content.locale, {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </time>
+              </div>
 
-            <p class="mt-4 leading-7 text-zinc-400">{post.data.description}</p>
+              <h3 class="text-xl font-semibold tracking-tight text-white">
+                {post.data.title}
+              </h3>
 
-            <a
-              href={`/blog/${post.id}`}
-              class="mt-8 inline-flex w-fit items-center gap-2 font-semibold text-brand-400 transition hover:text-brand-300"
-            >
-              Read article
-              <span aria-hidden="true">→</span>
-            </a>
-          </article>
-        ))
+              <p class="mt-4 leading-7 text-zinc-400">
+                {post.data.description}
+              </p>
+
+              <a
+                href={`${content.routePrefix}/${postSlug}`}
+                class="mt-8 inline-flex w-fit items-center gap-2 font-semibold text-brand-400 transition hover:text-brand-300"
+              >
+                {content.readMore}
+                <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          );
+        })
       }
     </div>
   </div>

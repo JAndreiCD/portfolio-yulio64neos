@@ -1,0 +1,158 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const principles = [
+  {
+    title: "Construir con claridad",
+    description:
+      "Me importa que el software sea fácil de entender, extender y mantener con el tiempo.",
+  },
+  {
+    title: "Pensar más allá de lo visual",
+    description:
+      "Un buen producto no sólo debe verse bien. También debe ser rápido, útil, accesible y estar alineado con objetivos reales.",
+  },
+  {
+    title: "Aprender con profundidad",
+    description:
+      "Trabajo constantemente en fortalecer mis bases en desarrollo web, backend, Linux, C y arquitectura de software.",
+  },
+];
+
+const stack = [
+  "Astro",
+  "Tailwind CSS",
+  "TypeScript",
+  "Laravel",
+  "PHP",
+  "MySQL",
+  "Flutter",
+  "Dart",
+  "Linux",
+  "Git",
+];
+
+const links = [
+  {
+    label: "GitHub",
+    href: "https://github.com/JAndreiCD",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/julio-andrei-x86/",
+  },
+  {
+    label: "Email",
+    href: "mailto:julioandrei.dev@gmail.com",
+  },
+];
+---
+
+<BaseLayout
+  title="Sobre mí — Julio Andrei"
+  description="Conoce más sobre Julio Andrei, desarrollador de software freelance en Puebla, México."
+>
+  <section
+    class="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-28"
+  >
+    <div class="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+      <aside>
+        <p
+          class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-400"
+        >
+          Sobre mí
+        </p>
+
+        <h1
+          class="mt-5 text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-6xl"
+        >
+          Construyo software práctico con cuidado e intención.
+        </h1>
+
+        <p class="mt-6 text-lg leading-8 text-zinc-400">
+          Soy Julio Andrei, desarrollador de software en Puebla, México. Me
+          enfoco en construir sitios web profesionales, aplicaciones web, APIs y
+          experiencias móviles.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          {
+            links.map((link) => (
+              <a
+                href={link.href}
+                target={link.href.startsWith("http") ? "_blank" : undefined}
+                rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+                class="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-zinc-300 transition hover:border-brand-400/40 hover:bg-brand-400/10 hover:text-brand-300"
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </div>
+      </aside>
+
+      <div class="space-y-8">
+        <div
+          class="rounded-3xl border border-white/10 bg-white/[0.025] p-6 sm:p-8"
+        >
+          <h2 class="text-2xl font-semibold tracking-tight text-white">
+            Qué guía mi trabajo
+          </h2>
+
+          <div class="mt-6 space-y-5 text-zinc-400">
+            <p>
+              Me gusta construir software con un propósito claro. No sólo
+              páginas que se vean bien en una captura, sino productos digitales
+              que ayuden a explicar un servicio, administrar información,
+              contactar clientes o mejorar un flujo de trabajo.
+            </p>
+
+            <p>
+              Mi enfoque actual es el desarrollo freelance: sitios web
+              profesionales, landing pages, sistemas web, APIs backend e
+              interfaces móviles para negocios y profesionales independientes.
+            </p>
+
+            <p>
+              También me importan las bases técnicas detrás del trabajo:
+              estructura clara, código legible, rendimiento, diseño responsivo y
+              arquitectura mantenible.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-3">
+          {
+            principles.map((principle) => (
+              <article class="rounded-3xl border border-white/10 bg-white/[0.025] p-6">
+                <h3 class="font-semibold text-white">{principle.title}</h3>
+
+                <p class="mt-3 text-sm leading-7 text-zinc-400">
+                  {principle.description}
+                </p>
+              </article>
+            ))
+          }
+        </div>
+
+        <div
+          class="rounded-3xl border border-white/10 bg-white/[0.025] p-6 sm:p-8"
+        >
+          <h2 class="text-2xl font-semibold tracking-tight text-white">
+            Tecnologías con las que trabajo
+          </h2>
+
+          <div class="mt-6 flex flex-wrap gap-2">
+            {
+              stack.map((item) => (
+                <span class="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1 text-sm font-medium text-zinc-400">
+                  {item}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

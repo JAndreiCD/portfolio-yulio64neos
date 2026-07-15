@@ -1,34 +1,92 @@
 ---
-const services = [
-  {
-    eyebrow: "01",
-    title: "Professional websites",
+interface Props {
+  lang?: "en" | "es";
+}
+
+const { lang = "en" } = Astro.props;
+
+const content = {
+  en: {
+    eyebrow: "Services",
+    title: "What I can build for you.",
     description:
-      "Fast, responsive, and polished websites for businesses that need a serious online presence.",
-    items: ["Landing pages", "Business websites", "Portfolio sites"],
+      "I help small businesses, independent professionals, and growing teams turn ideas into useful digital products: websites, systems, APIs, and mobile experiences that are easy to understand and maintain.",
+    cta: "View all services",
+    href: "/en/services",
+    services: [
+      {
+        eyebrow: "01",
+        title: "Professional websites",
+        description:
+          "Fast, responsive, and polished websites for businesses that need a serious online presence.",
+        items: ["Landing pages", "Business websites", "Portfolio sites"],
+      },
+      {
+        eyebrow: "02",
+        title: "Web applications",
+        description:
+          "Custom interfaces and internal tools designed around real workflows, not generic templates.",
+        items: ["Dashboards", "Admin panels", "Data-driven apps"],
+      },
+      {
+        eyebrow: "03",
+        title: "Backend & APIs",
+        description:
+          "Reliable backend foundations for authentication, business logic, data persistence, and integrations.",
+        items: ["REST APIs", "Authentication", "Database design"],
+      },
+      {
+        eyebrow: "04",
+        title: "Mobile experiences",
+        description:
+          "Cross-platform mobile interfaces focused on usability, performance, and maintainable architecture.",
+        items: ["Flutter apps", "API integration", "Device features"],
+      },
+    ],
   },
-  {
-    eyebrow: "02",
-    title: "Web applications",
+  es: {
+    eyebrow: "Servicios",
+    title: "Qué puedo construir para ti.",
     description:
-      "Custom interfaces and internal tools designed around real workflows, not generic templates.",
-    items: ["Dashboards", "Admin panels", "Data-driven apps"],
+      "Ayudo a pequeños negocios, profesionales independientes y equipos en crecimiento a convertir ideas en productos digitales útiles: sitios web, sistemas, APIs y experiencias móviles claras, rápidas y fáciles de mantener.",
+    cta: "Ver servicios",
+    href: "/es/servicios",
+    services: [
+      {
+        eyebrow: "01",
+        title: "Sitios web profesionales",
+        description:
+          "Sitios rápidos, responsivos y bien presentados para negocios que necesitan una presencia digital seria.",
+        items: ["Landing pages", "Sitios para negocio", "Portafolios"],
+      },
+      {
+        eyebrow: "02",
+        title: "Aplicaciones web",
+        description:
+          "Interfaces e instrumentos internos diseñados alrededor de flujos reales de trabajo, no plantillas genéricas.",
+        items: ["Dashboards", "Paneles administrativos", "Apps con datos"],
+      },
+      {
+        eyebrow: "03",
+        title: "Backend y APIs",
+        description:
+          "Bases confiables para autenticación, lógica de negocio, persistencia de datos e integraciones.",
+        items: ["APIs REST", "Autenticación", "Diseño de base de datos"],
+      },
+      {
+        eyebrow: "04",
+        title: "Experiencias móviles",
+        description:
+          "Interfaces móviles multiplataforma enfocadas en usabilidad, rendimiento y arquitectura mantenible.",
+        items: [
+          "Apps Flutter",
+          "Integración con APIs",
+          "Funciones del dispositivo",
+        ],
+      },
+    ],
   },
-  {
-    eyebrow: "03",
-    title: "Backend & APIs",
-    description:
-      "Reliable backend foundations for authentication, business logic, data persistence, and integrations.",
-    items: ["REST APIs", "Authentication", "Database design"],
-  },
-  {
-    eyebrow: "04",
-    title: "Mobile experiences",
-    description:
-      "Cross-platform mobile interfaces focused on usability, performance, and maintainable architecture.",
-    items: ["Flutter apps", "API integration", "Device features"],
-  },
-];
+}[lang];
 ---
 
 <section class="border-t border-white/8 bg-white/[0.015]">
@@ -38,32 +96,30 @@ const services = [
         <p
           class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-400"
         >
-          Services
+          {content.eyebrow}
         </p>
 
         <h2
           class="mt-5 max-w-xl text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-5xl"
         >
-          What I can build for you.
+          {content.title}
         </h2>
 
         <p class="mt-6 max-w-xl text-base leading-8 text-zinc-400">
-          I help small businesses, independent professionals, and growing teams
-          turn ideas into useful digital products: websites, systems, APIs, and
-          mobile experiences that are easy to understand and maintain.
+          {content.description}
         </p>
 
         <a
-          href="/services"
+          href={content.href}
           class="mt-8 inline-flex min-h-12 items-center justify-center rounded-full border border-white/12 bg-white/[0.03] px-6 font-semibold text-white transition hover:border-brand-400/50 hover:bg-brand-400/10 hover:text-brand-300"
         >
-          View all services
+          {content.cta}
         </a>
       </div>
 
       <div class="grid gap-4 sm:grid-cols-2">
         {
-          services.map((service) => (
+          content.services.map((service) => (
             <article class="group rounded-3xl border border-white/10 bg-zinc-950/40 p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-400/40 hover:bg-white/[0.04]">
               <div class="mb-8 flex items-center justify-between gap-4">
                 <span class="font-mono text-sm text-brand-400">

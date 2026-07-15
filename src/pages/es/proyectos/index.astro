@@ -1,0 +1,88 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const projects = await getCollection("projects", (project) => {
+  return project.id.startsWith("es/");
+});
+
+const sortedProjects = projects.sort((a, b) => {
+  return b.data.publishedDate.getTime() - a.data.publishedDate.getTime();
+});
+---
+
+<BaseLayout
+  title="Proyectos — Julio Andrei"
+  description="Proyectos seleccionados, conceptos y casos de estudio de desarrollo de software."
+>
+  <section
+    class="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-28"
+  >
+    <div class="max-w-3xl">
+      <p
+        class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-400"
+      >
+        Proyectos
+      </p>
+
+      <h1
+        class="mt-5 text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-6xl"
+      >
+        Proyectos construidos con objetivos claros y ejecución práctica.
+      </h1>
+
+      <p class="mt-6 text-lg leading-8 text-zinc-400">
+        Una colección de proyectos, conceptos y casos de estudio enfocados en
+        interfaces útiles, código mantenible y necesidades reales de negocio.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-5 lg:grid-cols-2">
+      {
+        sortedProjects.map((project) => {
+          const projectSlug = project.id.replace("es/", "");
+
+          return (
+            <article class="group rounded-3xl border border-white/10 bg-white/[0.025] p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-400/40 hover:bg-white/[0.04] sm:p-8">
+              <div class="mb-8 flex min-h-52 items-center justify-center rounded-2xl border border-white/10 bg-zinc-950/60">
+                <div class="text-center">
+                  <p class="font-mono text-sm text-brand-400">
+                    Vista del proyecto
+                  </p>
+
+                  <p class="mt-2 text-sm text-zinc-500">
+                    Recursos visuales próximamente
+                  </p>
+                </div>
+              </div>
+
+              <h2 class="text-2xl font-semibold tracking-tight text-white">
+                {project.data.title}
+              </h2>
+
+              <p class="mt-4 leading-7 text-zinc-400">
+                {project.data.description}
+              </p>
+
+              <div class="mt-6 flex flex-wrap gap-2">
+                {project.data.technologies.map((technology) => (
+                  <span class="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1 text-xs font-medium text-zinc-400">
+                    {technology}
+                  </span>
+                ))}
+              </div>
+
+              <a
+                href={`/es/proyectos/${projectSlug}`}
+                class="mt-8 inline-flex w-fit items-center gap-2 font-semibold text-brand-400 transition hover:text-brand-300"
+              >
+                Leer caso de estudio
+                <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          );
+        })
+      }
+    </div>
+  </section>
+</BaseLayout>

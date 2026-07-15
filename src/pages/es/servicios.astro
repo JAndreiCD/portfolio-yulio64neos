@@ -1,0 +1,244 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const services = [
+  {
+    title: "Sitios web profesionales",
+    description:
+      "Un sitio claro, rápido y bien presentado para negocios, profesionales independientes o marcas que necesitan una presencia digital seria.",
+    deliverables: [
+      "Diseño responsivo para celular, tablet y escritorio",
+      "Páginas de servicios o productos",
+      "Estructura clara de contacto",
+      "Implementación enfocada en rendimiento",
+    ],
+  },
+  {
+    title: "Landing pages",
+    description:
+      "Páginas enfocadas en presentar una oferta, campaña, servicio o producto con una llamada a la acción clara.",
+    deliverables: [
+      "Estructura enfocada en conversión",
+      "Diseño mobile-first",
+      "Secciones y copy organizados",
+      "Flujo de contacto o captación de prospectos",
+    ],
+  },
+  {
+    title: "Aplicaciones web",
+    description:
+      "Interfaces personalizadas y herramientas internas para equipos que necesitan administrar información, procesos o flujos de trabajo.",
+    deliverables: [
+      "Dashboards",
+      "Paneles administrativos",
+      "Interfaces basadas en datos",
+      "Integración entre frontend y backend",
+    ],
+  },
+  {
+    title: "Backend y APIs",
+    description:
+      "Bases sólidas para autenticación, lógica de negocio, operaciones con base de datos e integraciones con otros sistemas.",
+    deliverables: [
+      "Desarrollo de APIs REST",
+      "Flujos de autenticación",
+      "Estructura de base de datos",
+      "Integración con aplicaciones web o móviles",
+    ],
+  },
+  {
+    title: "Experiencias móviles",
+    description:
+      "Interfaces móviles multiplataforma enfocadas en usabilidad, mantenimiento e integración con servicios backend.",
+    deliverables: [
+      "Interfaces con Flutter",
+      "Integración con APIs",
+      "Flujos pensados para móvil",
+      "Uso de funciones del dispositivo cuando sea necesario",
+    ],
+  },
+  {
+    title: "Mantenimiento y mejoras",
+    description:
+      "Soporte para sitios o sistemas existentes que necesitan correcciones, limpieza, mejoras visuales o modernización.",
+    deliverables: [
+      "Corrección de errores",
+      "Mejoras de interfaz",
+      "Optimización de rendimiento",
+      "Mejoras en estructura de código",
+    ],
+  },
+];
+
+const processSteps = [
+  {
+    step: "01",
+    title: "Descubrimiento",
+    description:
+      "Aclaramos el objetivo, el público, los problemas actuales, las funciones necesarias y el contexto del negocio.",
+  },
+  {
+    step: "02",
+    title: "Alcance",
+    description:
+      "Defino un plan práctico con páginas, funcionalidades, entregables, prioridades y dirección técnica.",
+  },
+  {
+    step: "03",
+    title: "Desarrollo",
+    description:
+      "Construyo el proyecto cuidando diseño responsivo, código mantenible y una estructura clara.",
+  },
+  {
+    step: "04",
+    title: "Revisión y entrega",
+    description:
+      "Revisamos el resultado, ajustamos detalles, preparamos el despliegue y dejamos el proyecto listo para usarse.",
+  },
+];
+---
+
+<BaseLayout
+  title="Servicios — Julio Andrei"
+  description="Servicios de desarrollo de software: sitios web profesionales, landing pages, aplicaciones web, APIs, experiencias móviles y mantenimiento."
+>
+  <section
+    class="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-28"
+  >
+    <div class="max-w-4xl">
+      <p
+        class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-400"
+      >
+        Servicios
+      </p>
+
+      <h1
+        class="mt-5 text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-6xl"
+      >
+        Servicios de software para necesidades reales de negocio.
+      </h1>
+
+      <p class="mt-6 max-w-3xl text-lg leading-8 text-zinc-400">
+        Ayudo a negocios, profesionales independientes y equipos en crecimiento
+        a construir sitios web, aplicaciones y herramientas digitales claras,
+        rápidas, responsivas y fáciles de mantener.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      {
+        services.map((service) => (
+          <article class="group rounded-3xl border border-white/10 bg-white/[0.025] p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-400/40 hover:bg-white/[0.04] sm:p-8">
+            <div class="mb-8 h-2 w-12 rounded-full bg-brand-400/80 shadow-[0_0_20px_rgba(60,227,156,0.45)]" />
+
+            <h2 class="text-2xl font-semibold tracking-tight text-white">
+              {service.title}
+            </h2>
+
+            <p class="mt-4 leading-7 text-zinc-400">{service.description}</p>
+
+            <ul class="mt-7 space-y-3">
+              {service.deliverables.map((item) => (
+                <li class="flex gap-3 text-sm text-zinc-400">
+                  <span
+                    class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400"
+                    aria-hidden="true"
+                  />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="border-t border-white/8 bg-white/[0.015]">
+    <div class="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-28">
+      <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+        <div>
+          <p
+            class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-400"
+          >
+            Proceso
+          </p>
+
+          <h2
+            class="mt-5 text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-5xl"
+          >
+            Un proceso claro desde la idea hasta la entrega.
+          </h2>
+
+          <p class="mt-6 leading-8 text-zinc-400">
+            Prefiero la planeación práctica, el alcance honesto y la ejecución
+            constante. La meta no es complicar el proyecto, sino construir lo
+            correcto con una estructura que pueda crecer.
+          </p>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          {
+            processSteps.map((item) => (
+              <article class="rounded-3xl border border-white/10 bg-zinc-950/40 p-6">
+                <p class="font-mono text-sm text-brand-400">{item.step}</p>
+
+                <h3 class="mt-5 text-xl font-semibold text-white">
+                  {item.title}
+                </h3>
+
+                <p class="mt-4 leading-7 text-zinc-400">{item.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-white/8">
+    <div class="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-28">
+      <div
+        class="rounded-[2rem] border border-brand-400/20 bg-brand-400/10 p-8 sm:p-10 lg:p-14"
+      >
+        <div class="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+          <div>
+            <p
+              class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-300"
+            >
+              Empecemos con claridad
+            </p>
+
+            <h2
+              class="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-5xl"
+            >
+              ¿Todavía no sabes exactamente qué necesita tu proyecto?
+            </h2>
+
+            <p class="mt-6 max-w-2xl leading-8 text-zinc-300">
+              No necesitas tener todos los detalles resueltos desde el inicio.
+              Cuéntame qué quieres mejorar, lanzar o construir, y podemos
+              definir una primera versión clara y alcanzable.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-3 sm:flex-row lg:justify-end">
+            <a
+              href="/es/contacto"
+              class="inline-flex min-h-12 items-center justify-center rounded-full bg-brand-400 px-6 font-semibold text-zinc-950 transition hover:bg-brand-300"
+            >
+              Iniciar proyecto
+            </a>
+
+            <a
+              href="/es/proyectos"
+              class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-6 font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.08]"
+            >
+              Ver proyectos
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

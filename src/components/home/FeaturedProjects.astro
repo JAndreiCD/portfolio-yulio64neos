@@ -1,8 +1,42 @@
 ---
 import { getCollection } from "astro:content";
 
-const projects = await getCollection("projects", ({ data }) => {
-  return data.featured === true;
+interface Props {
+  lang?: "en" | "es";
+}
+
+const { lang = "en" } = Astro.props;
+
+const content = {
+  en: {
+    eyebrow: "Selected work",
+    title: "Projects with clear goals and practical execution.",
+    cta: "View all projects",
+    href: "/en/projects",
+    previewTitle: "Project preview",
+    previewText: "Visual assets coming soon",
+    readMore: "Read case study",
+    contentPrefix: "en/",
+    routePrefix: "/en/projects",
+  },
+  es: {
+    eyebrow: "Proyectos destacados",
+    title: "Proyectos con objetivos claros y ejecución práctica.",
+    cta: "Ver proyectos",
+    href: "/es/proyectos",
+    previewTitle: "Vista del proyecto",
+    previewText: "Recursos visuales próximamente",
+    readMore: "Leer caso de estudio",
+    contentPrefix: "es/",
+    routePrefix: "/es/proyectos",
+  },
+}[lang];
+
+const projects = await getCollection("projects", (project) => {
+  return (
+    project.id.startsWith(content.contentPrefix) &&
+    project.data.featured === true
+  );
 });
 ---
 
@@ -15,66 +49,72 @@ const projects = await getCollection("projects", ({ data }) => {
         <p
           class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-400"
         >
-          Selected work
+          {content.eyebrow}
         </p>
 
         <h2
           class="mt-5 max-w-2xl text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-5xl"
         >
-          Projects with clear goals and practical execution.
+          {content.title}
         </h2>
       </div>
 
       <a
-        href="/projects"
+        href={content.href}
         class="inline-flex min-h-12 w-fit items-center justify-center rounded-full border border-white/12 bg-white/[0.03] px-6 font-semibold text-white transition hover:border-brand-400/50 hover:bg-brand-400/10 hover:text-brand-300"
       >
-        View all projects
+        {content.cta}
       </a>
     </div>
 
     <div class="grid gap-5 lg:grid-cols-2">
       {
-        projects.map((project) => (
-          <article class="group rounded-3xl border border-white/10 bg-white/[0.025] p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-400/40 hover:bg-white/[0.04] sm:p-8">
-            <div class="mb-8 flex min-h-52 items-center justify-center rounded-2xl border border-white/10 bg-zinc-950/60">
-              <div class="text-center">
-                <p class="font-mono text-sm text-brand-400">Project preview</p>
-                <p class="mt-2 text-sm text-zinc-500">
-                  Visual assets coming soon
-                </p>
-              </div>
-            </div>
+        projects.map((project) => {
+          const projectSlug = project.id.replace(content.contentPrefix, "");
 
-            <div class="flex flex-col gap-5">
-              <div>
-                <h3 class="text-2xl font-semibold tracking-tight text-white">
-                  {project.data.title}
-                </h3>
-
-                <p class="mt-4 max-w-2xl leading-7 text-zinc-400">
-                  {project.data.description}
-                </p>
+          return (
+            <article class="group rounded-3xl border border-white/10 bg-white/[0.025] p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-400/40 hover:bg-white/[0.04] sm:p-8">
+              <div class="mb-8 flex min-h-52 items-center justify-center rounded-2xl border border-white/10 bg-zinc-950/60">
+                <div class="text-center">
+                  <p class="font-mono text-sm text-brand-400">
+                    {content.previewTitle}
+                  </p>
+                  <p class="mt-2 text-sm text-zinc-500">
+                    {content.previewText}
+                  </p>
+                </div>
               </div>
 
-              <div class="flex flex-wrap gap-2">
-                {project.data.technologies.map((technology) => (
-                  <span class="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1 text-xs font-medium text-zinc-400">
-                    {technology}
-                  </span>
-                ))}
-              </div>
+              <div class="flex flex-col gap-5">
+                <div>
+                  <h3 class="text-2xl font-semibold tracking-tight text-white">
+                    {project.data.title}
+                  </h3>
 
-              <a
-                href={`/projects/${project.id}`}
-                class="inline-flex w-fit items-center gap-2 font-semibold text-brand-400 transition hover:text-brand-300"
-              >
-                Read case study
-                <span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </article>
-        ))
+                  <p class="mt-4 max-w-2xl leading-7 text-zinc-400">
+                    {project.data.description}
+                  </p>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                  {project.data.technologies.map((technology) => (
+                    <span class="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1 text-xs font-medium text-zinc-400">
+                      {technology}
+                    </span>
+                  ))}
+                </div>
+
+                <a
+                  href={`${content.routePrefix}/${projectSlug}`}
+                  class="inline-flex w-fit items-center gap-2 font-semibold text-brand-400 transition hover:text-brand-300"
+                >
+                  {content.readMore}
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          );
+        })
       }
     </div>
   </div>

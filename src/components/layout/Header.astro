@@ -1,18 +1,38 @@
 ---
 import LocalTime from "../ui/LocalTime.astro";
 
-const navigation = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/services" },
-  { label: "Projects", href: "/projects" },
-  { label: "Blog", href: "/blog" },
-  { label: "About", href: "/about" },
-];
-
 const currentPath = Astro.url.pathname;
 
+const isSpanish = currentPath === "/es" || currentPath.startsWith("/es/");
+const lang = isSpanish ? "es" : "en";
+
+const navigation = isSpanish
+  ? [
+      { label: "Inicio", href: "/es" },
+      { label: "Servicios", href: "/es/servicios" },
+      { label: "Proyectos", href: "/es/proyectos" },
+      { label: "Blog", href: "/es/blog" },
+      { label: "Sobre mí", href: "/es/sobre-mi" },
+    ]
+  : [
+      { label: "Home", href: "/en" },
+      { label: "Services", href: "/en/services" },
+      { label: "Projects", href: "/en/projects" },
+      { label: "Blog", href: "/en/blog" },
+      { label: "About", href: "/en/about" },
+    ];
+
+const contactHref = isSpanish ? "/es/contacto" : "/en/contact";
+const ctaLabel = isSpanish ? "Iniciar proyecto" : "Start a project";
+
+const languageSwitch = isSpanish
+  ? { label: "EN", href: "/en", ariaLabel: "Switch to English" }
+  : { label: "ES", href: "/es", ariaLabel: "Cambiar a español" };
+
 function isActivePath(href: string) {
-  return href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+  return href === "/es" || href === "/en"
+    ? currentPath === href
+    : currentPath.startsWith(href);
 }
 ---
 
@@ -23,7 +43,7 @@ function isActivePath(href: string) {
     class="mx-auto flex min-h-20 w-full max-w-7xl items-center justify-between gap-6 px-5 sm:px-8 lg:px-10"
   >
     <a
-      href="/"
+      href={isSpanish ? "/es" : "/en"}
       class="shrink-0 font-mono text-sm font-bold tracking-tight text-white sm:text-base"
       aria-label="Yulio64neos home"
     >
@@ -57,12 +77,20 @@ function isActivePath(href: string) {
       <LocalTime />
     </div>
 
-    <div class="hidden lg:block">
+    <div class="hidden items-center gap-3 lg:flex">
       <a
-        href="/contact"
+        href={languageSwitch.href}
+        aria-label={languageSwitch.ariaLabel}
+        class="rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 text-xs font-semibold text-zinc-300 transition hover:border-brand-400/40 hover:bg-brand-400/10 hover:text-brand-300"
+      >
+        {languageSwitch.label}
+      </a>
+
+      <a
+        href={contactHref}
         class="rounded-full bg-brand-400 px-4 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-300 focus:ring-offset-2 focus:ring-offset-zinc-950"
       >
-        Start a project
+        {ctaLabel}
       </a>
     </div>
 
@@ -128,12 +156,22 @@ function isActivePath(href: string) {
           }
         </nav>
 
-        <a
-          href="/contact"
-          class="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-brand-400 px-6 font-semibold text-zinc-950 transition hover:bg-brand-300"
-        >
-          Start a project
-        </a>
+        <div class="mt-5 grid grid-cols-[auto_1fr] gap-3">
+          <a
+            href={languageSwitch.href}
+            aria-label={languageSwitch.ariaLabel}
+            class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-5 font-semibold text-zinc-300 transition hover:border-brand-400/40 hover:bg-brand-400/10 hover:text-brand-300"
+          >
+            {languageSwitch.label}
+          </a>
+
+          <a
+            href={contactHref}
+            class="inline-flex min-h-12 items-center justify-center rounded-full bg-brand-400 px-6 font-semibold text-zinc-950 transition hover:bg-brand-300"
+          >
+            {ctaLabel}
+          </a>
+        </div>
       </div>
     </details>
   </div>

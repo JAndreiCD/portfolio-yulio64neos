@@ -1,3 +1,32 @@
+---
+interface Props {
+  lang?: "en" | "es";
+}
+
+const { lang = "en" } = Astro.props;
+
+const content = {
+  en: {
+    eyebrow: "Let’s work together",
+    title: "Ready to build something useful?",
+    description:
+      "Tell me what you want to launch, improve, or automate. I can help you turn the idea into a clear, maintainable digital product.",
+    primaryCta: "Start a project",
+    secondaryCta: "Email me",
+    primaryHref: "/en/contact",
+  },
+  es: {
+    eyebrow: "Trabajemos juntos",
+    title: "¿Listo para construir algo útil?",
+    description:
+      "Cuéntame qué quieres lanzar, mejorar o automatizar. Puedo ayudarte a convertir la idea en un producto digital claro, útil y mantenible.",
+    primaryCta: "Iniciar proyecto",
+    secondaryCta: "Escríbeme",
+    primaryHref: "/es/contacto",
+  },
+}[lang];
+---
+
 <section class="border-t border-white/8">
   <div class="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-28">
     <div
@@ -8,34 +37,33 @@
           <p
             class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-300"
           >
-            Let’s work together
+            {content.eyebrow}
           </p>
 
           <h2
             class="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-5xl"
           >
-            Ready to build something useful?
+            {content.title}
           </h2>
 
           <p class="mt-6 max-w-2xl leading-8 text-zinc-300">
-            Tell me what you want to launch, improve, or automate. I can help
-            you turn the idea into a clear, maintainable digital product.
+            {content.description}
           </p>
         </div>
 
         <div class="flex flex-col gap-3 sm:flex-row lg:justify-end">
           <a
-            href="/contact"
+            href={content.primaryHref}
             class="inline-flex min-h-12 items-center justify-center rounded-full bg-brand-400 px-6 font-semibold text-zinc-950 transition hover:bg-brand-300"
           >
-            Start a project
+            {content.primaryCta}
           </a>
 
           <a
             href="mailto:julioandrei.dev@gmail.com"
             class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-6 font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.08]"
           >
-            Email me
+            {content.secondaryCta}
           </a>
         </div>
       </div>

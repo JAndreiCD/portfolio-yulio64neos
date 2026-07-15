@@ -1,18 +1,22 @@
 ---
 import { getCollection, render } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
-  const projects = await getCollection("projects");
+  const projects = await getCollection("projects", (project) => {
+    return project.id.startsWith("en/");
+  });
 
-  return projects.map((project) => ({
-    params: {
-      id: project.id,
-    },
-    props: {
-      project,
-    },
-  }));
+  return projects.map((project) => {
+    return {
+      params: {
+        id: project.id.replace("en/", ""),
+      },
+      props: {
+        project,
+      },
+    };
+  });
 }
 
 const { project } = Astro.props;
@@ -26,7 +30,7 @@ const { Content } = await render(project);
 >
   <article class="mx-auto w-full max-w-4xl px-5 py-20 sm:px-8 lg:py-28">
     <a
-      href="/projects"
+      href="/en/projects"
       class="mb-10 inline-flex text-sm font-semibold text-zinc-400 transition hover:text-brand-300"
     >
       ← Back to projects

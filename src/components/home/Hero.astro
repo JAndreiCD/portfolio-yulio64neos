@@ -1,5 +1,44 @@
 ---
 import LocalTime from "../ui/LocalTime.astro";
+
+interface Props {
+  lang?: "en" | "es";
+}
+
+const { lang = "en" } = Astro.props;
+
+const content = {
+  en: {
+    eyebrow: "Freelance software developer",
+    titleStart: "Digital products built with",
+    titleAccent: "purpose",
+    titleEnd: "not noise.",
+    description:
+      "I design and develop professional websites, web applications, APIs, and mobile experiences for businesses and growing teams.",
+    primaryCta: "Explore my work",
+    secondaryCta: "Start a project",
+    primaryHref: "/en/projects",
+    secondaryHref: "/en/contact",
+    codeName: "Julio Andrei",
+    codeLocation: "Puebla, Mexico",
+    codeFocus: "Useful software",
+  },
+  es: {
+    eyebrow: "Desarrollador de software freelance",
+    titleStart: "Productos digitales construidos con",
+    titleAccent: "propósito",
+    titleEnd: "no ruido.",
+    description:
+      "Diseño y desarrollo sitios web profesionales, aplicaciones web, APIs y experiencias móviles para negocios, profesionales independientes y equipos en crecimiento.",
+    primaryCta: "Ver proyectos",
+    secondaryCta: "Iniciar proyecto",
+    primaryHref: "/es/proyectos",
+    secondaryHref: "/es/contacto",
+    codeName: "Julio Andrei",
+    codeLocation: "Puebla, México",
+    codeFocus: "Software útil",
+  },
+}[lang];
 ---
 
 <section class="relative overflow-hidden">
@@ -14,34 +53,34 @@ import LocalTime from "../ui/LocalTime.astro";
       <p
         class="mb-5 font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-400"
       >
-        Freelance software developer
+        {content.eyebrow}
       </p>
 
       <h1
         class="max-w-4xl text-4xl font-semibold leading-[1.08] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl"
       >
-        Digital products built with{' '}
-        <span class="text-brand-400">purpose</span>, not noise.
+        {content.titleStart}{" "}
+        <span class="text-brand-400">{content.titleAccent}</span>,
+        {content.titleEnd}
       </h1>
 
       <p class="mt-7 max-w-2xl text-base leading-8 text-zinc-400 sm:text-lg">
-        I design and develop professional websites, web applications, APIs, and
-        mobile experiences for businesses and growing teams.
+        {content.description}
       </p>
 
       <div class="mt-10 flex flex-col gap-3 sm:flex-row">
         <a
-          href="/projects"
+          href={content.primaryHref}
           class="inline-flex min-h-12 items-center justify-center rounded-full bg-brand-400 px-6 font-semibold text-zinc-950 transition hover:bg-brand-300"
         >
-          Explore my work
+          {content.primaryCta}
         </a>
 
         <a
-          href="/contact"
+          href={content.secondaryHref}
           class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/12 bg-white/[0.03] px-6 font-semibold text-white transition hover:border-white/25 hover:bg-white/[0.06]"
         >
-          Start a project
+          {content.secondaryCta}
         </a>
       </div>
     </div>
@@ -65,17 +104,17 @@ import LocalTime from "../ui/LocalTime.astro";
         <div class="space-y-3 pl-5 text-zinc-400">
           <p>
             name:
-            <span class="text-zinc-100">'Julio Andrei'</span>,
+            <span class="text-zinc-100">'{content.codeName}'</span>,
           </p>
 
           <p>
             location:
-            <span class="text-zinc-100">'Puebla, Mexico'</span>,
+            <span class="text-zinc-100">'{content.codeLocation}'</span>,
           </p>
 
           <p>
             focus:
-            <span class="text-zinc-100">'Useful software'</span>,
+            <span class="text-zinc-100">'{content.codeFocus}'</span>,
           </p>
 
           <p>

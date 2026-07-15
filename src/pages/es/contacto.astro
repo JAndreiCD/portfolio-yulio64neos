@@ -1,0 +1,166 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const projectTypes = [
+  "Sitio web profesional",
+  "Landing page",
+  "Aplicación web",
+  "Backend / API",
+  "Aplicación móvil",
+  "Mantenimiento o mejoras",
+];
+
+const contactChecklist = [
+  "Qué quieres construir o mejorar",
+  "Contexto de tu negocio o proyecto",
+  "Si ya tienes sitio, sistema, diseño o referencias",
+  "Tiempo ideal de entrega",
+  "Presupuesto aproximado, si ya lo tienes definido",
+];
+
+const socialLinks = [
+  {
+    label: "GitHub",
+    href: "https://github.com/JAndreiCD",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/julio-andrei-x86/",
+  },
+  {
+    label: "Email",
+    href: "mailto:julioandrei.dev@gmail.com",
+  },
+];
+---
+
+<BaseLayout
+  title="Contacto — Julio Andrei"
+  description="Contacta a Julio Andrei para proyectos freelance de desarrollo de software, sitios web, aplicaciones, APIs y mejoras técnicas."
+>
+  <section
+    class="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-28"
+  >
+    <div class="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+      <div>
+        <p
+          class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-400"
+        >
+          Contacto
+        </p>
+
+        <h1
+          class="mt-5 text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-6xl"
+        >
+          ¿Tienes un proyecto en mente?
+        </h1>
+
+        <p class="mt-6 max-w-2xl text-lg leading-8 text-zinc-400">
+          Cuéntame qué quieres construir, mejorar o lanzar. Puedo ayudarte a
+          aterrizar la idea, definir un alcance práctico y convertirla en un
+          producto digital profesional.
+        </p>
+
+        <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+          <a
+            href="mailto:julioandrei.dev@gmail.com?subject=Consulta%20de%20proyecto%20desde%20tu%20portafolio"
+            class="inline-flex min-h-12 items-center justify-center rounded-full bg-brand-400 px-6 font-semibold text-zinc-950 transition hover:bg-brand-300"
+          >
+            Enviarme correo
+          </a>
+
+          <a
+            href="/es/proyectos"
+            class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/12 bg-white/[0.03] px-6 font-semibold text-white transition hover:border-brand-400/50 hover:bg-brand-400/10 hover:text-brand-300"
+          >
+            Ver proyectos
+          </a>
+        </div>
+
+        <p class="mt-6 text-sm text-zinc-500">
+          Disponible para proyectos en español e inglés. Basado en Puebla,
+          México.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          {
+            socialLinks.map((link) => (
+              <a
+                href={link.href}
+                target={link.href.startsWith("http") ? "_blank" : undefined}
+                rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+                class="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-zinc-300 transition hover:border-brand-400/40 hover:bg-brand-400/10 hover:text-brand-300"
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <article
+          class="rounded-3xl border border-white/10 bg-white/[0.025] p-6 sm:p-8"
+        >
+          <h2 class="text-2xl font-semibold tracking-tight text-white">
+            En qué puedo ayudarte
+          </h2>
+
+          <div class="mt-6 grid gap-3 sm:grid-cols-2">
+            {
+              projectTypes.map((type) => (
+                <div class="rounded-2xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-sm font-medium text-zinc-300">
+                  {type}
+                </div>
+              ))
+            }
+          </div>
+        </article>
+
+        <article
+          class="rounded-3xl border border-white/10 bg-white/[0.025] p-6 sm:p-8"
+        >
+          <h2 class="text-2xl font-semibold tracking-tight text-white">
+            Detalles útiles para incluir
+          </h2>
+
+          <ul class="mt-6 space-y-3">
+            {
+              contactChecklist.map((item) => (
+                <li class="flex gap-3 text-zinc-400">
+                  <span
+                    class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400"
+                    aria-hidden="true"
+                  />
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </article>
+
+        <article
+          class="rounded-3xl border border-brand-400/20 bg-brand-400/10 p-6 sm:p-8"
+        >
+          <p
+            class="font-mono text-sm uppercase tracking-[0.18em] text-brand-300"
+          >
+            Correo directo
+          </p>
+
+          <a
+            href="mailto:julioandrei.dev@gmail.com"
+            class="mt-3 block break-all text-2xl font-semibold tracking-tight text-white transition hover:text-brand-300"
+          >
+            julioandrei.dev@gmail.com
+          </a>
+
+          <p class="mt-4 text-sm leading-7 text-zinc-400">
+            Puedes escribirme con una idea general. No necesitas tener todo el
+            proyecto definido desde el primer mensaje.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

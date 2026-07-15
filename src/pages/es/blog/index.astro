@@ -1,0 +1,90 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const posts = await getCollection("blog", (post) => {
+  return post.id.startsWith("es/") && post.data.draft !== true;
+});
+
+const sortedPosts = posts.sort((a, b) => {
+  return b.data.publishedDate.getTime() - a.data.publishedDate.getTime();
+});
+---
+
+<BaseLayout
+  title="Blog — Julio Andrei"
+  description="Artículos sobre desarrollo de software, Linux, C, desarrollo web y construcción de productos digitales."
+>
+  <section
+    class="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-28"
+  >
+    <div class="max-w-3xl">
+      <p
+        class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-400"
+      >
+        Blog
+      </p>
+
+      <h1
+        class="mt-5 text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-6xl"
+      >
+        Notas sobre software, aprendizaje y construcción de productos.
+      </h1>
+
+      <p class="mt-6 text-lg leading-8 text-zinc-400">
+        Un espacio personal para documentar lo que construyo, lo que aprendo y
+        cómo voy fortaleciendo mi criterio como desarrollador de software.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-5 lg:grid-cols-2">
+      {
+        sortedPosts.map((post) => {
+          const postSlug = post.id.replace("es/", "");
+
+          return (
+            <article class="group rounded-3xl border border-white/10 bg-white/[0.025] p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-400/40 hover:bg-white/[0.04] sm:p-8">
+              <div class="mb-6 flex flex-wrap items-center gap-3 text-sm text-zinc-500">
+                <span class="rounded-full border border-brand-400/20 bg-brand-400/10 px-3 py-1 font-mono text-xs text-brand-300">
+                  {post.data.category}
+                </span>
+
+                <time datetime={post.data.publishedDate.toISOString()}>
+                  {post.data.publishedDate.toLocaleDateString("es-MX", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </time>
+              </div>
+
+              <h2 class="text-2xl font-semibold tracking-tight text-white">
+                {post.data.title}
+              </h2>
+
+              <p class="mt-4 leading-7 text-zinc-400">
+                {post.data.description}
+              </p>
+
+              <div class="mt-6 flex flex-wrap gap-2">
+                {post.data.tags.map((tag) => (
+                  <span class="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1 text-xs font-medium text-zinc-400">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <a
+                href={`/es/blog/${postSlug}`}
+                class="mt-8 inline-flex w-fit items-center gap-2 font-semibold text-brand-400 transition hover:text-brand-300"
+              >
+                Leer artículo
+                <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          );
+        })
+      }
+    </div>
+  </section>
+</BaseLayout>

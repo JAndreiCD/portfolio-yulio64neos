@@ -1,0 +1,81 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", (post) => {
+    return post.id.startsWith("en/") && post.data.draft !== true;
+  });
+
+  return posts.map((post) => {
+    return {
+      params: {
+        id: post.id.replace("en/", ""),
+      },
+      props: {
+        post,
+      },
+    };
+  });
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout
+  title={`${post.data.title} — Julio Andrei`}
+  description={post.data.description}
+  type="article"
+>
+  <article class="mx-auto w-full max-w-4xl px-5 py-20 sm:px-8 lg:py-28">
+    <a
+      href="/en/blog"
+      class="mb-10 inline-flex text-sm font-semibold text-zinc-400 transition hover:text-brand-300"
+    >
+      ← Back to blog
+    </a>
+
+    <header>
+      <p
+        class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-brand-400"
+      >
+        {post.data.category}
+      </p>
+
+      <h1
+        class="mt-5 text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-6xl"
+      >
+        {post.data.title}
+      </h1>
+
+      <p class="mt-6 text-lg leading-8 text-zinc-400">
+        {post.data.description}
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-3 text-sm text-zinc-500">
+        <time datetime={post.data.publishedDate.toISOString()}>
+          {
+            post.data.publishedDate.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          }
+        </time>
+
+        {
+          post.data.tags.map((tag) => (
+            <span class="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1 text-xs font-medium text-zinc-400">
+              {tag}
+            </span>
+          ))
+        }
+      </div>
+    </header>
+
+    <div class="project-content mt-14">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
